@@ -1,0 +1,150 @@
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(360deg);
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+html {
+  background: #060612;
+}
+
+body {
+  font-family: arial;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: fill-available;
+  min-height: 100svh;
+  min-width: 100vw;
+  background: radial-gradient(56.63% 56.63% at 50% 43.37%, #1c1726 0%, #060612 100%);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  place-items: center;
+}
+
+body.scrollingDisabled {
+  overflow: hidden;
+}
+
+.game-canvas {
+  display: none;
+  border: 0px none;
+  background-color: black;
+  position: relative;
+  transition: opacity 5s ease-in;
+  -webkit-transition: opacity 5s ease-in;
+  opacity: 0;
+  filter: blur(0) grayscale(0);
+  margin-top: auto;
+  margin-bottom: auto;
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+.game-canvas.active {
+  animation-name: fadeIn;
+  animation-duration: 2s;
+  opacity: 1;
+}
+
+.spinner {
+  height: 30px;
+  width: 30px;
+  -webkit-animation: rotation 0.8s linear infinite;
+  -moz-animation: rotation 0.8s linear infinite;
+  -o-animation: rotation 0.8s linear infinite;
+  animation: rotation 0.8s linear infinite;
+  border: 5px solid #bdff00;
+  border-top: 5px solid #719900;
+  border-radius: 100%;
+}
+
+.status {
+  display: inline-block;
+  vertical-align: top;
+  font-weight: bold;
+  color: white;
+}
+
+#progress {
+  width: 250px;
+  height: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 5px;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #8492a6;
+  height: 10px;
+  border-radius: 15px;
+}
+
+progress[value]::-webkit-progress-value {
+  background-image: -webkit-linear-gradient(left, #719900, #bdff00);
+  height: 10px;
+  border-radius: 15px;
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.loading > * {
+  padding: 10px;
+  margin: 10px;
+}
