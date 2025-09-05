@@ -28,6 +28,6 @@
     "onAppInstall": "/internal/on-app-install"
   },
   "dev": {
-    "subreddit": "<% name %>_dev"
+    "subreddit": "<% subreddit %>_dev"
   }
 }

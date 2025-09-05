@@ -27,6 +27,17 @@ declare global {
   }
 }
 
+// This is the manifest file data structure for type checking security
+type RunnerManifest = {
+  manifestFiles: string[];
+  manifestFilesMD5: string[];
+  mainJS?: string;
+  unx?: string;
+  index?: string;
+  runner?: { version?: string; yyc?: boolean };
+};
+
+
 class GameLoader {
   private statusElement: HTMLElement;
   private progressElement: HTMLProgressElement;
@@ -172,22 +183,52 @@ class GameLoader {
     this.canvasElement.style.width = `${newWidth}px`;
   }
 
-  private setupGameMakerGlobals() {
-    // Add missing global functions that GameMaker runtime expects
-    window.manifestFiles = () => {
-      return ["runner.data", "runner.js", "runner.wasm", "audio-worklet.js", "game.unx"].join(";");
-    };
+  private async loadRunnerManifest(): Promise<void> {
+    try {
+      const res = await fetch("/runner.json", {
+        credentials: "include",      // keep Devvit context; same-origin
+        cache: "no-cache"            // avoid stale manifest after deploys
+      });
+      if (!res.ok) throw new Error(`runner.json HTTP ${res.status}`);
+      const manifest = (await res.json()) as RunnerManifest;
 
-    window.manifestFilesMD5 = () => {
-      // These are placeholder MD5 hashes - in production you'd generate real ones
-      return [
-        "96639f0b1670517547d514b64fd69520", // runner.data
-        "50b2c0a5ddcadfc341039a2c99a67100", // runner.js  
-        "344f4ea88195b45f6ab2a94179f2a669", // runner.wasm
-        "e8f1e8db8cf996f8715a6f2164c2e44e", // audio-worklet.js
-        "0933b3f54b034772eeb5f64220eab88b"  // game.unx
-      ];
-    };
+      // Basic validation
+      if (!Array.isArray(manifest.manifestFiles) || !Array.isArray(manifest.manifestFilesMD5)) {
+        throw new Error("runner.json missing arrays");
+      }
+      if (manifest.manifestFiles.length !== manifest.manifestFilesMD5.length) {
+        console.warn("[runner.json] manifestFiles and manifestFilesMD5 length mismatch");
+      }
+
+      // Wire the global getters from the manifest
+      window.manifestFiles = () => manifest.manifestFiles.join(";");
+      window.manifestFilesMD5 = () => manifest.manifestFilesMD5.slice(); // return a copy
+
+    } catch (e) {
+      console.warn("Falling back to hardcoded manifest (runner.json not available):", e);
+
+      // Fallback to current hardcoded values (this should never happen)
+      window.manifestFiles = () =>
+        [
+          "runner.data",
+          "runner.js",
+          "runner.wasm",
+          "audio-worklet.js",
+          "game.unx"
+        ].join(";");
+
+      window.manifestFilesMD5 = () =>
+        [
+          "585214623b669175a702fed30de7d21d",
+          "8669aa66d44cfb4f13a098cd6b0296e1",
+          "d29ac123833b56dcfbe188f10e5ecb85",
+          "e8f1e8db8cf996f8715a6f2164c2e44e",
+          "00a26996df3ce310bb5836ef7f4b0e3c"
+        ];
+    }
+  }
+
+  private setupGameMakerGlobals() {
 
     // GameMaker async method support - make variables globally accessible
     window.g_pAddAsyncMethod = -1;
@@ -296,6 +337,9 @@ class GameLoader {
       // First try to get initial data from the server
       await this.fetchInitialData();
       
+      // Load manifest data that GameMaker runtime expects
+      await this.loadRunnerManifest();
+
       // Setup required global functions before loading GameMaker script
       this.setupGameMakerGlobals();
       
