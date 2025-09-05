@@ -20,6 +20,8 @@ if "%~2"=="" (
 
 set GAMEMAKER_DIR=%~1
 set PROJECT_NAME=%~2
+:: Properly replace dash with underscore for subreddit name (needs to follow the pattern: ^[a-zA-Z][a-zA-Z0-9_]*$)
+set "SUBREDDIT_NAME=%PROJECT_NAME:-=_%"
 set RUNNER_DIR=%GAMEMAKER_DIR%\runner
 set CLIENT_PUBLIC=%cd%\src\client\public
 
@@ -47,23 +49,9 @@ echo GameMaker directory: %GAMEMAKER_DIR%
 echo Project name: %PROJECT_NAME%
 echo Devvit project: %cd%
 
-:: Create game directory if it doesn't exist
-if not exist "%CLIENT_PUBLIC%\game" (
-    echo Creating game directory...
-    mkdir "%CLIENT_PUBLIC%\game"
-)
-
-:: Copy all files from runner directory to game directory
+:: Copy all files from runner directory to public directory
 echo Copying GameMaker files to game directory...
-xcopy "%RUNNER_DIR%\*" "%CLIENT_PUBLIC%\game\" /Y /Q
-
-:: Copy specific files to root of public directory (required by GameMaker runtime)
-echo Copying required files to public root...
-copy "%RUNNER_DIR%\runner.data" "%CLIENT_PUBLIC%\runner.data" >nul
-copy "%RUNNER_DIR%\runner.wasm" "%CLIENT_PUBLIC%\runner.wasm" >nul
-copy "%RUNNER_DIR%\audio-worklet.js" "%CLIENT_PUBLIC%\audio-worklet.js" >nul
-copy "%RUNNER_DIR%\game.unx" "%CLIENT_PUBLIC%\game.unx" >nul
-copy "%RUNNER_DIR%\runner.js" "%CLIENT_PUBLIC%\runner.js" >nul
+xcopy "%RUNNER_DIR%\*" "%CLIENT_PUBLIC%\" /Y /Q
 
 :: Replace template placeholders with project name
 echo Replacing template placeholders...
@@ -78,6 +66,7 @@ if exist "package.json" (
 if exist "devvit.json" (
     echo Updating devvit.json...
     powershell -Command "(Get-Content 'devvit.json') -replace '<%%\s*name\s*%%>', '%PROJECT_NAME%' | Set-Content 'devvit.json'"
+    powershell -Command "(Get-Content 'devvit.json') -replace '<%%\s*subreddit\s*%%>', '%SUBREDDIT_NAME%' | Set-Content 'devvit.json'"
 )
 
 :: Replace in server post.ts
@@ -103,5 +92,3 @@ echo Files copied:
 echo - All GameMaker files → src\client\public\game\
 echo - Core runtime files → src\client\public\ (root level)
 echo.
-
-pause

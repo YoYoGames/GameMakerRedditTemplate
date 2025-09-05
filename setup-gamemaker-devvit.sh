@@ -14,6 +14,8 @@ fi
 
 GAMEMAKER_DIR="$1"
 PROJECT_NAME="$2"
+# Properly replace dash with underscore for subreddit name (needs to follow the pattern: ^[a-zA-Z][a-zA-Z0-9_]*$)
+SUBREDDIT_NAME="${PROJECT_NAME//-/_}"
 RUNNER_DIR="$GAMEMAKER_DIR/runner"
 CLIENT_PUBLIC="$(pwd)/src/client/public"
 
@@ -41,23 +43,9 @@ echo "GameMaker directory: $GAMEMAKER_DIR"
 echo "Project name: $PROJECT_NAME"
 echo "Devvit project: $(pwd)"
 
-# Create game directory if it doesn't exist
-if [ ! -d "$CLIENT_PUBLIC/game" ]; then
-    echo "Creating game directory..."
-    mkdir -p "$CLIENT_PUBLIC/game"
-fi
-
 # Copy all files from runner directory to game directory
 echo "Copying GameMaker files to game directory..."
-cp -r "$RUNNER_DIR"/* "$CLIENT_PUBLIC/game/"
-
-# Copy specific files to root of public directory (required by GameMaker runtime)
-echo "Copying required files to public root..."
-cp "$RUNNER_DIR/runner.data" "$CLIENT_PUBLIC/runner.data"
-cp "$RUNNER_DIR/runner.wasm" "$CLIENT_PUBLIC/runner.wasm"
-cp "$RUNNER_DIR/audio-worklet.js" "$CLIENT_PUBLIC/audio-worklet.js"
-cp "$RUNNER_DIR/game.unx" "$CLIENT_PUBLIC/game.unx"
-cp "$RUNNER_DIR/runner.js" "$CLIENT_PUBLIC/runner.js"
+cp -r "$RUNNER_DIR"/* "$CLIENT_PUBLIC/"
 
 # Replace template placeholders with project name
 echo "Replacing template placeholders..."
@@ -71,9 +59,11 @@ replace_template() {
         if [[ "$OSTYPE" == "darwin"* ]]; then
             # macOS
             sed -i '' "s/<% *name *%>/$PROJECT_NAME/g" "$file"
+            sed -i '' "s/<% *subreddit *%>/$SUBREDDIT_NAME/g" "$file"
         else
             # Linux
             sed -i "s/<% *name *%>/$PROJECT_NAME/g" "$file"
+            sed -i "s/<% *subreddit *%>/$SUBREDDIT_NAME/g" "$file"
         fi
     fi
 }
