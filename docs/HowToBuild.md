@@ -17,9 +17,9 @@ This guide walks you through setting up and developing GameMaker games for Reddi
 
 Before you begin, ensure you have the following installed and configured:
 
-- **Node.js 22+** - [Download from nodejs.org](https://nodejs.org/)
-- **GameMaker Studio** with WebAssembly export capability
-- **Reddit Developer Account** - [Sign up at developers.reddit.com](https://developers.reddit.com/)
+- **Node.js 22+** - Download from [nodejs.org](https://nodejs.org/)
+- **GameMaker** - Any recent 2024.1400.3 Beta release (or newer), which you can download from [the release notes site](https://releases.gamemaker.io/) and must have also configured already for GX.games YYC development by following [its setup guide](https://github.com/YoYoGames/GameMaker-Bugs/wiki#platform-setup-guides)
+- **Reddit Developer Account** - Sign up at [developers.reddit.com](https://developers.reddit.com/)
 
 ---
 
@@ -28,8 +28,8 @@ Before you begin, ensure you have the following installed and configured:
 1. Install Node.js and npm (instructions)
 2. Go to [developers.reddit.com/new](https://developers.reddit.com/new/template) and select the "GameMaker" template
 ![Screenshot: GameMaker reddit template](_screenshots/gamemaker-template.png)
-3. Complete the setup wizard (you'll need to create a Reddit account and connect it to Reddit Developers)
-4. Follow the instructions in your terminal
+3. Complete the setup wizard - which will ask you to create a Reddit account if you do not have one already and then connect it to the Reddit Developers service
+4. Follow the instructions the Reddit template site will give you to initialise and run your new project in your terminal app of choice (PowerShell and cmd both work fine)
 
 On success, you should see something like this:
 
@@ -45,8 +45,9 @@ Cutting the template to the target directory...
 └────────────────────────────────────────────────────┘
 ```
 
-The Devvit GameMaker Template includes a pre-built GameMaker project. The [GameMaker Reddit Extension](github.com/YoYoGames/GMEXT-Reddit/) adds helpful functions for reddit projects and includes an example project
+Take note of your real Devvit project directory (in the example above it's "/Users/user.name/my-app") as you will need this later on.
 
+The Devvit GameMaker Template includes a pre-built GameMaker project,, plus the separate [GameMaker Reddit Extension](github.com/YoYoGames/GMEXT-Reddit/) adds helpful functions for Reddit projects and includes a larger example project.
 
 ---
 
@@ -65,6 +66,13 @@ Open the GameMaker project that you want to deploy to Reddit.
 ![Screenshot: GameMaker Game Options showing Reddit platform](_screenshots/gamemaker-options-reddit.png)
 
 #### Step 3: Set the Devvit Project Path
+
+In the **Devvit Project ID** field, enter the short, no-spaces game name that you registered with Reddit earlier
+
+**Example:**
+```
+my-game
+```
 
 In the **Devvit Project Path** field, enter the full path to your Devvit project directory that you created in the previous section.
 
@@ -89,20 +97,22 @@ Ensure your project is configured to export to WebAssembly:
 
 ## Development Workflow
 
-The workflow is designed to closely follow the devvit developer workflow. This differs from GameMaker's typical workflow but should allow for quicker iteration and testing of your project.
+The workflow is designed to closely follow the devvit developer workflow. This differs from GameMaker's typical workflow for all other target platforms, but in the case of Reddit should allow for quicker iteration and testing of your project.
 
-### One-Time Setup: Start Devvit Development Server
+### Pre-GameMaker Setup: Start Devvit Development Server
 
-In your Devvit project directory, start the development server. **You only need to do this once** - leave it running throughout your development session:
+Open your terminal app in your Devvit project directory and start the development server:
 
 ```bash
 npm run dev
 ```
 
+**You only need to do this once per GameMaker session** - leave the terminal app running throughout your development session and then close it whenever you're done with all your Reddit builds for the day.
+
 This command does several things:
 - Starts a local development server
 - Uploads your app to Reddit's Devvit platform
-- Provides a link to test your app on Reddit
+- Provides a link to test your app on Reddit (not clickabl,e - you will need to copy/paste it manually the first time and thereafter can just refresh your browser tab
 - **Watches for file changes** and automatically re-uploads them
 
 It should look something like this:
@@ -132,7 +142,7 @@ Installing playtest version 0.0.1.16... Success! Please visit your test subreddi
 
 The last output should be a link to your dev community page containing your uploaded game.
 
-**Note:** You can keep this terminal window open and the `npm run dev` command running. It will automatically detect changes and automatically re-upload your game as you make changes.
+**Reminder:** keep this terminal window open and the `npm run dev` command running while you do your work inside GameMaker. It will automatically detect changes and automatically re-upload your game as you do your builds inside GameMaker.
 
 For more details about the development workflow, see the [Devvit documentation](https://developers.reddit.com/docs).
 
@@ -159,7 +169,7 @@ GameMaker will:
 
 #### Step 3: Wait for Devvit to Detect Changes
 
-The `npm run dev` process (still running in your terminal) will:
+The `npm run dev` process (still running in your terminal) will shortly thereafter:
 - Automatically detect the new/changed files
 - Re-upload your game to Reddit's platform
 - Display upload progress in the terminal
@@ -169,7 +179,7 @@ Wait for the update to complete. Devvit will provide a link to the updated commu
 #### Step 4: Test on Reddit
 
 Once the upload completes:
-1. Click the link provided by `npm run dev` (or refresh if already open)
+1. Open the link provided by `npm run dev` in your browser (or refresh if already open)
 2. Test your game directly on Reddit
 3. Iterate!
 
@@ -178,7 +188,7 @@ Once the upload completes:
 
 ### Development Tips
 
-- **Keep `npm run dev` running**: Don't stop the development server between builds. It's designed to run continuously.
+- **Keep `npm run dev` running**: Don't stop the development server between builds. It's designed to be run continuously.
 - **Build time**: The first build may take longer; subsequent builds are typically faster.
 - **File watching**: Devvit monitors the project directory, so any file changes trigger an upload.
 - **Browser cache**: If changes don't appear, try a hard refresh (Ctrl+Shift+R or Cmd+Shift+R).
@@ -271,9 +281,9 @@ export type SaveScoreRequest = {
 ### GameMaker build fails
 
 **Solution:**
-- Verify you have WebAssembly export enabled
 - Check that the Reddit platform is properly configured
 - Ensure the Devvit Project Path exists and is writable
+- As a sanity-check, see if you can successfully build packages for the GX.games target inside GameMaker, rather than the Reddit one. If you can, check your OS file permissions/antivirus client are not blocking your Reddit-specific folders.
 
 ### Game doesn't appear on Reddit
 
@@ -281,14 +291,14 @@ export type SaveScoreRequest = {
 - Confirm `npm run dev` completed the upload successfully
 - Check the terminal for any error messages
 - Try a hard refresh in your browser (Ctrl+Shift+R or Cmd+Shift+R)
-- Verify you're logged in to the correct Reddit account
+- Verify you're logged-in to the correct Reddit account
 
 ### Files are in the wrong location
 
 **Solution:**
 - GameMaker should copy files to `src/client/public/` in your Devvit project
 - Verify the Devvit Project Path setting in GameMaker Game Options
-- Check folder permissions
+- Check your OS file permissions/antivirus client are not blocking your Reddit-specific folders.
 
 ### Node.js version issues
 
@@ -317,4 +327,4 @@ The GameMaker → Devvit workflow is designed for rapid iteration:
 1. **One-time setup**: Create Devvit project, configure GameMaker with the project path
 2. **Start development**: Run `npm run dev` once and keep it running
 3. **Iterate**: Make changes in GameMaker → Click Run → Wait for upload → Test on Reddit
-4. **Deploy**: When ready, run `npm run deploy` and `npm run launch`
+4. **Deploy**: When ready to release your game to the public, run `npm run deploy` and `npm run launch`
