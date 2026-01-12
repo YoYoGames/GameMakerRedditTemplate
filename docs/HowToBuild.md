@@ -173,6 +173,9 @@ Once the upload completes:
 2. Test your game directly on Reddit
 3. Iterate!
 
+> [!WARNING]
+> File uploads have a 100 MB size limit and a 30-second timeout. We’re working to improve these limits. If you encounter issues, try splitting large files or using a faster network connection.
+
 ### Development Tips
 
 - **Keep `npm run dev` running**: Don't stop the development server between builds. It's designed to run continuously.
