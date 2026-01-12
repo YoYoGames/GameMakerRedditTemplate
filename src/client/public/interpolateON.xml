@@ -1,0 +1,5 @@
+<GM_HTML5_CSSCanvasEmscripten>
+        image-rendering: optimizeQuality;           /* Older versions of FF          */
+        image-rendering: auto;                      /* Awesome future-browsers       */
+        -ms-interpolation-mode: bicubic;            /* IE                            */
+</GM_HTML5_CSSCanvasEmscripten>
