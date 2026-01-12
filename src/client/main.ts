@@ -179,8 +179,8 @@ class GameLoader {
       newHeight = newWidth / this.startingAspect!;
     }
 
-    this.canvasElement.style.height = `${newHeight}px`;
-    this.canvasElement.style.width = `${newWidth}px`;
+    this.canvasElement.style.height = "100%" //`${newHeight}px`;
+    this.canvasElement.style.width = "100%" //`${newWidth}px`;
   }
 
   private async loadRunnerManifest(): Promise<void> {
