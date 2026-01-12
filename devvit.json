@@ -5,6 +5,10 @@
     "dir": "dist/client",
     "entrypoints": {
       "default": {
+        "entry": "splash.html",
+        "inline": true
+      },
+      "game": {
         "entry": "index.html"
       }
     }
