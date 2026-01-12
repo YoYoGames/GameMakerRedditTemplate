@@ -1,0 +1,51 @@
+<GM_HTML_Buttons>
+      <button class="output-button" onclick="toggleConsole()">
+        Toggle Console
+      </button>
+      <button id="QRButton" class="output-button" onclick="toggleQRCode()">
+        Show QRCode
+      </button>
+      <button id="QR2Button" class="output-button" onclick="toggleQRCode2()">
+        Show Opera GX QRCode
+      </button>
+</GM_HTML_Buttons>
+
+<GM_HTML_ScriptCode>
+      var qrElement = document.getElementById("QRCode");
+      var qr2Element = document.getElementById("QR2Code");
+      var qrButton = document.getElementById("QRButton");
+      var qr2Button = document.getElementById("QR2Button");
+      function toggleConsole() {
+        var isShown = outputElement.style.display === "flex";
+        if (isShown) {
+          outputElement.style.display = "none";
+          outputElement.scrollIntoView(false);
+        } else {
+          outputElement.style.display = "flex";
+          outputElement.scrollIntoView(true);
+        }
+      }
+
+      function toggleQRCode() {
+        var isShown = !qrElement.hidden;
+        if (isShown) {
+          qrElement.hidden = true;
+          qrButton.innerHTML = "Show QRCode";
+        } else {
+          qrElement.hidden = false;
+          qrButton.innerHTML = "Hide QRCode";
+        }
+      }
+
+      function toggleQRCode2() {
+        var isShown = !qr2Element.hidden;
+        if (isShown) {
+          qr2Element.hidden = true;
+          qr2Button.innerHTML = "Show Opera GX QRCode";
+        } else {
+          qr2Element.hidden = false;
+          qr2Button.innerHTML = "Hide Opera GX QRCode";
+        }
+      }
+</GM_HTML_ScriptCode>
+
