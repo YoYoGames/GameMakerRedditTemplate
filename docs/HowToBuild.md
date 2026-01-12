@@ -25,9 +25,10 @@ Before you begin, ensure you have the following installed and configured:
 
 ## Environment setup
 
-1. Install Node.js and npm (instructions)
-2. Go to [developers.reddit.com/new](https://developers.reddit.com/new/template) and select the "GameMaker" template
 ![Screenshot: GameMaker reddit template](_screenshots/gamemaker-template.png)
+
+1. Install Node.js and npm
+2. Go to [developers.reddit.com/new](https://developers.reddit.com/new/template) and select the "GameMaker" template
 3. Complete the setup wizard - which will ask you to create a Reddit account if you do not have one already and then connect it to the Reddit Developers service
 4. Follow the instructions the Reddit template site will give you to initialise and run your new project in your terminal app of choice (PowerShell and cmd both work fine)
 
@@ -99,7 +100,7 @@ Ensure your project is configured to export to WebAssembly:
 
 The workflow is designed to closely follow the devvit developer workflow. This differs from GameMaker's typical workflow for all other target platforms, but in the case of Reddit should allow for quicker iteration and testing of your project.
 
-### Pre-GameMaker Setup: Start Devvit Development Server
+### Devvit Setup: Start Devvit Development Server
 
 Open your terminal app in your Devvit project directory and start the development server:
 
@@ -112,7 +113,7 @@ npm run dev
 This command does several things:
 - Starts a local development server
 - Uploads your app to Reddit's Devvit platform
-- Provides a link to test your app on Reddit (not clickabl,e - you will need to copy/paste it manually the first time and thereafter can just refresh your browser tab
+- Provides a link to test your app on Reddit (not clickable - you will need to copy/paste it manually the first time and thereafter can just refresh your browser tab
 - **Watches for file changes** and automatically re-uploads them
 
 It should look something like this:
