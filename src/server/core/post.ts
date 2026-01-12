@@ -7,10 +7,8 @@ export const createPost = async () => {
   }
 
   return await reddit.submitCustomPost({
-    splash: {
-      appDisplayName: "<% name %>",
-    },
     subredditName: subredditName,
     title: "<% name %>",
+    entry: 'default',
   });
 };
