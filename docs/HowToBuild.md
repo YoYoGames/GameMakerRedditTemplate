@@ -48,7 +48,7 @@ Cutting the template to the target directory...
 
 Take note of your real Devvit project directory (in the example above it's "/Users/user.name/my-app") as you will need this later on.
 
-The Devvit GameMaker Template includes a pre-built GameMaker project,, plus the separate [GameMaker Reddit Extension](github.com/YoYoGames/GMEXT-Reddit/) adds helpful functions for Reddit projects and includes a larger example project.
+The Devvit GameMaker Template includes a pre-built GameMaker project. The project this has been built from can be found [here](https://github.com/YoYoGames/GM-RedditDemo/)
 
 ---
 
@@ -223,9 +223,9 @@ This submits your app for Reddit's review process. For more information about th
 
 ---
 
-## GameMaker Reddit Extension
+## GameMaker Reddit Demo
 
-The [GameMaker Reddit Extension](github.com/YoYoGames/GMEXT-Reddit/) provides developers with additional tools for developing games for Reddit as well as an example GameMaker project to get you started.
+The [GameMaker Reddit Demo](https://github.com/YoYoGames/GM-RedditDemo/) provides developers with an example usecase and additional tools for developing games for Reddit.
 
 ---
 
@@ -318,6 +318,7 @@ export type SaveScoreRequest = {
 - [r/Devvit Community](https://www.reddit.com/r/devvit)
 - [GameMaker Manual](https://manual.gamemaker.io/)
 - [GameMaker Reddit Template Repository](https://github.com/YoYoGames/GameMakerRedditTemplate)
+- [GameMaker Reddit Demo Project](https://github.com/YoYoGames/GM-RedditDemo)
 
 ---
 
