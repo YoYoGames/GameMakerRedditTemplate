@@ -19,6 +19,7 @@ Before you begin, ensure you have the following installed and configured:
 
 - **Node.js 22+** - Download from [nodejs.org](https://nodejs.org/)
 - **GameMaker** - Any recent 2024.1400.3 Beta release (or newer), which you can download from [the release notes site](https://releases.gamemaker.io/) and must have also configured already for GX.games YYC development by following [its setup guide](https://github.com/YoYoGames/GameMaker-Bugs/wiki#platform-setup-guides)
+    - You may use older versions of GameMaker but will need to use the [GMEXT-Reddit Extension](https://github.com/YoYoGames/GMEXT-Reddit/) which includes the example project and requires you to build your game with the gx.games target rather than the reddit target. Further details can be found in the extension repository.
 - **Reddit Developer Account** - Sign up at [developers.reddit.com](https://developers.reddit.com/)
 
 ---
@@ -162,6 +163,9 @@ When you're ready to test your changes:
 1. Click the **Run** button in GameMaker (or press F5)
 
 ![Screenshot: GameMaker Run button highlighted](_screenshots/gamemaker-run-button.png)
+
+> [!IMPORTANT]
+> If not running on Windows, ensure that execute permissions are enabled on the `setup-gamemaker-devvit.sh` script within your devvit project
 
 GameMaker will:
 - Build your game to WebAssembly
@@ -308,6 +312,13 @@ export type SaveScoreRequest = {
 - Run `node --version` to check your version
 - Update Node.js if necessary: [Download latest version](https://nodejs.org/)
 
+### setup-gamemaker-devvit.sh Permissions Issue
+
+**Solution**
+- Ensure that execute permissions are enabled on the `setup-gamemaker-devvit.sh` script
+    - Run `ls -l setup-gamemaker-devvit.sh` to verify permissions
+- Run `chmod +x setup-gamemaker-devvit.sh` to grant execute permissions
+
 ---
 
 ## Additional Resources
@@ -319,6 +330,7 @@ export type SaveScoreRequest = {
 - [GameMaker Manual](https://manual.gamemaker.io/)
 - [GameMaker Reddit Template Repository](https://github.com/YoYoGames/GameMakerRedditTemplate)
 - [GameMaker Reddit Demo Project](https://github.com/YoYoGames/GM-RedditDemo)
+- [GameMaker Reddit Extension - For older versions of GameMaker](https://github.com/YoYoGames/GMEXT-Reddit)
 
 ---
 
