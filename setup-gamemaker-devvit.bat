@@ -53,42 +53,17 @@ echo Devvit project: %cd%
 echo Copying GameMaker files to game directory...
 xcopy "%RUNNER_DIR%\*" "%CLIENT_PUBLIC%\" /Y /Q
 
-:: Replace template placeholders with project name
-echo Replacing template placeholders...
-
-:: Replace in package.json
-if exist "package.json" (
-    echo Updating package.json...
-    powershell -Command "(Get-Content 'package.json') -replace '<%%\s*name\s*%%>', '%PROJECT_NAME%' | Set-Content 'package.json'"
-)
-
-:: Replace in devvit.json
-if exist "devvit.json" (
-    echo Updating devvit.json...
-    powershell -Command "(Get-Content 'devvit.json') -replace '<%%\s*name\s*%%>', '%PROJECT_NAME%' | Set-Content 'devvit.json'"
-    powershell -Command "(Get-Content 'devvit.json') -replace '<%%\s*subreddit\s*%%>', '%SUBREDDIT_NAME%' | Set-Content 'devvit.json'"
-)
-
-:: Replace in server post.ts
-if exist "src\server\core\post.ts" (
-    echo Updating post.ts...
-    powershell -Command "(Get-Content 'src\server\core\post.ts') -replace '<%%\s*name\s*%%>', '%PROJECT_NAME%' | Set-Content 'src\server\core\post.ts'"
-)
-
 echo.
 echo GameMaker game setup complete!
 echo.
 echo Project configured:
 echo - Name: %PROJECT_NAME%
 echo - GameMaker files: Copied
-echo - Template placeholders: Replaced
 echo.
 echo Next steps:
-echo 1. Run "npm install" if you haven't already
-echo 2. Run "npm run dev" to start the development server
-echo 3. Your GameMaker game should now load in the Devvit app
+echo 1. Run "npm run dev" to start the development server
+echo 2. Your GameMaker game should now load in the Devvit app
 echo.
 echo Files copied:
-echo - All GameMaker files → src\client\public\game\
 echo - Core runtime files → src\client\public\ (root level)
 echo.
