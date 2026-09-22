@@ -23,7 +23,7 @@ set PROJECT_NAME=%~2
 :: Properly replace dash with underscore for subreddit name (needs to follow the pattern: ^[a-zA-Z][a-zA-Z0-9_]*$)
 set "SUBREDDIT_NAME=%PROJECT_NAME:-=_%"
 set RUNNER_DIR=%GAMEMAKER_DIR%\runner
-set CLIENT_PUBLIC=%cd%\src\client\public
+set CLIENT_PUBLIC=%cd%\public
 
 :: Check if GameMaker directory exists
 if not exist "%GAMEMAKER_DIR%" (
@@ -38,9 +38,10 @@ if not exist "%RUNNER_DIR%" (
 )
 
 :: Check if we're in a Devvit project directory
-if not exist "src\client\public" (
+if not exist "public" (
     echo Error: This doesn't appear to be a Devvit project directory
     echo Make sure you're running this script from the root of your Devvit project
+    echo If you have an older project layout, place your GameMaker files in the src/client/public directory instead
     exit /b 1
 )
 
@@ -65,5 +66,5 @@ echo 1. Run "npm run dev" to start the development server
 echo 2. Your GameMaker game should now load in the Devvit app
 echo.
 echo Files copied:
-echo - Core runtime files → src\client\public\ (root level)
+echo - Core runtime files → public\ (root level)
 echo.
